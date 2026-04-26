@@ -21,6 +21,7 @@
                     <a href="https://chbk.fun/RiokyRun" target="_blank" class="game-card"><i class="fa-solid fa-person-running"></i><span>Rioky Run</span></a>
                     <a href="https://chbk.fun/FacteurSnakeur/" target="_blank" class="game-card"><i class="fa-solid fa-worm"></i><span>Facteur Snakeur</span></a>
                     <a href="https://chbk.fun/chronogame" target="_blank" class="game-card"><i class="fa-solid fa-stopwatch"></i><span>ChronoGame</span></a>
+                    <a href="https://chbk.fun/chbkcasino" target="_blank" class="game-card"><i class="fa-solid fa-coins"></i><span>CHBKASINO</span></a>
                 </div>
             </div>
 
@@ -39,7 +40,7 @@
                 <div class="game-links">
                     <a href="https://chbk.fun/chibouk_repond" target="_blank" class="game-card"><i class="fa-solid fa-scroll"></i><span>CHBK Répond</span></a>
                     <a href="https://chbk.fun/chbkroulette" target="_blank" class="game-card"><i class="fa-solid fa-shuffle"></i><span>CHBK Roulette</span></a>
-                    <a href="https://chbk.fun/chbkrandomizer" target="_blank" class="game-card"><i class="fa-solid fa-circle-question"></i><span>CHBK Randomizer</span></a>
+                    <a href="#" onclick="accessRandomizer(event)" class="game-card"><i class="fa-solid fa-circle-question"></i><span>CHBK Randomizer <i class="fa-solid fa-lock" style="font-size: 0.8rem; margin-left: 5px; opacity: 0.5;"></i></span></a>
                 </div>
             </div>
 
@@ -47,6 +48,7 @@
                 <h2><i class="fa-solid fa-dice"></i> Board Games</h2>
                 <div class="game-links">
                     <a href="https://chbk.fun/chbkbomb/" target="_blank" class="game-card"><i class="fa-solid fa-bomb"></i><span>Chibouk Bomb</span></a>
+                    <a href="https://chbk.fun/uno" target="_blank" class="game-card"><i class="fa-solid fa-layer-group"></i><span>Uno CHBK</span></a>
                 </div>
             </div>
 
@@ -64,13 +66,17 @@
     </div>
 
     <script>
+        // Mot de passe dynamique (chbk + jour)
+        function getDailyPassword() {
+            return "chbk" + new Date().getDate();
+        }
+
+        // Accès aux chansons (Redirection)
         function checkPassword() {
             const input = document.getElementById('music-pass').value.toLowerCase().trim();
             const errorMsg = document.getElementById('error-msg');
-            const today = new Date().getDate(); 
-            const expectedPass = "chbk" + today; 
 
-            if (input === expectedPass) {
+            if (input === getDailyPassword()) {
                 window.location.href = "chbk-songs-secret.html";
             } else {
                 errorMsg.style.display = 'block';
@@ -78,6 +84,18 @@
             }
         }
 
+        // Accès au Randomizer (Prompt)
+        function accessRandomizer(event) {
+            event.preventDefault();
+            const pass = prompt("Ce site est protégé. Entrez le mot de passe :");
+            if (pass && pass.toLowerCase().trim() === getDailyPassword()) {
+                window.open("https://chbk.fun/chbkrandomizer", "_blank");
+            } else if (pass !== null) {
+                alert("Mot de passe incorrect !");
+            }
+        }
+
+        // Entrée clavier pour les chansons
         document.getElementById('music-pass').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') checkPassword();
         });
